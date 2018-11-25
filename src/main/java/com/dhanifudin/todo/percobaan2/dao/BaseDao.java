@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 public abstract class BaseDao<E> {
 
 	public BaseDao() {
-//		this.fields = new HashMap<>();
 	}
 
 	protected abstract String getTableName();
@@ -50,8 +49,20 @@ public abstract class BaseDao<E> {
 		return sb.toString();
 	}
 
+	protected String getJoinedTables() {
+		return getTableName();
+	}
+
 	public List<E> all() {
 		return search(null);
+	}
+
+	public E getById(Object id) {
+		Map<String, Object> conditions = new HashMap<>();
+		String key = String.format("%s.%s", getTableName(), getId());
+		conditions.put(key, id);
+		List<E> items = search(conditions);
+		return (items.size() > 0) ? items.get(0) : null;
 	}
 
 	public List<E> search(Map<String, Object> conditions) {
@@ -59,7 +70,7 @@ public abstract class BaseDao<E> {
 		try {
 			String where = (conditions != null) ? 
 				TextUtil.join(conditions.keySet(), " = ? ", "and") : "1";
-			String sql = String.format("select * from %s where %s", getTableName(), where);
+			String sql = String.format("select * from %s where %s", getJoinedTables(), where);
 			Connection connection = ConnectionFactory.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 			if (conditions != null) {

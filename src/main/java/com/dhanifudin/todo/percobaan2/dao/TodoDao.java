@@ -6,6 +6,7 @@
 package com.dhanifudin.todo.percobaan2.dao;
 
 import com.dhanifudin.todo.percobaan2.entities.Todo;
+import com.dhanifudin.todo.percobaan2.entities.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,27 +20,44 @@ public class TodoDao extends BaseDao<Todo> {
 
 	@Override
 	protected String getTableName() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return "todo";
+	}
+
+	@Override
+	protected String getJoinedTables() {
+		return "todo join users on todo.user_id = users.id";
 	}
 
 	@Override
 	protected String getId() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return "id";
 	}
 
 	@Override
 	protected String getPrimaryKey() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return "getId";
 	}
 
 	@Override
 	protected void setAttributes(Map<String, Object> attrs, Todo item) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		attrs.put("id", item.getId());
+		attrs.put("user_id", item.getUser().getId());
+		attrs.put("todo", item.getTodo());
+		attrs.put("done", item.isDone());
 	}
 
 	@Override
 	protected Todo iterate(List<Todo> items, ResultSet resultset) throws SQLException {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Todo todo = new Todo();
+		User user = new User();
+		todo.setId(resultset.getInt("todo.id"));
+		todo.setTodo(resultset.getString("todo.todo"));
+		todo.setDone(resultset.getBoolean("todo.done"));
+		user.setId(resultset.getInt("users.id"));
+		user.setUsername(resultset.getString("users.username"));
+		user.setPassword(resultset.getString("users.password"));
+		todo.setUser(user);
+		return todo;
 	}
 	
 }
