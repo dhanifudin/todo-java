@@ -61,15 +61,20 @@ public abstract class BaseDao<E> {
 		Map<String, Object> conditions = new HashMap<>();
 		String key = String.format("%s.%s", getTableName(), getId());
 		conditions.put(key, id);
-		List<E> items = search(conditions);
+		List<E> items = search(conditions, false);
 		return (items.size() > 0) ? items.get(0) : null;
 	}
 
 	public List<E> search(Map<String, Object> conditions) {
+		return search(conditions, false);
+	}
+
+	public List<E> search(Map<String, Object> conditions, boolean useLike) {
 		List<E> items = null;
 		try {
+			String operator = (useLike) ? " like ? " : " = ? ";
 			String where = (conditions != null) ? 
-				TextUtil.join(conditions.keySet(), " = ? ", "and") : "1";
+				TextUtil.join(conditions.keySet(), operator, "and") : "1";
 			String sql = String.format("select * from %s where %s", getJoinedTables(), where);
 			Connection connection = ConnectionFactory.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
