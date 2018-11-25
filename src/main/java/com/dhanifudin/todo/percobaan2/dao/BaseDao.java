@@ -5,8 +5,8 @@
  */
 package com.dhanifudin.todo.percobaan2.dao;
 
-import com.dhanifudin.todo.percobaan2.util.ConnectionFactory;
-import com.dhanifudin.todo.percobaan2.util.TextUtil;
+import com.dhanifudin.todo.percobaan2.lib.ConnectionFactory;
+import com.dhanifudin.todo.percobaan2.lib.TextUtil;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -6,15 +6,10 @@
 package com.dhanifudin.todo.percobaan2.dao;
 
 import com.dhanifudin.todo.percobaan2.entities.User;
-import com.dhanifudin.todo.percobaan2.util.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

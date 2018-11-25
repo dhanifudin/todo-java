@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dhanifudin.todo.percobaan2.util;
+package com.dhanifudin.todo.percobaan2.lib;
 
 import java.util.Collection;
 import java.util.List;
